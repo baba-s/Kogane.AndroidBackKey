@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KoganeUnityLib
+namespace UniAndroidBackKey
 {
 	/// <summary>
 	/// Android の戻るキーを管理するクラス
 	/// </summary>
-	public static class UniAndroidBackKey
+	public static class AndroidBackKey
 	{
 		//==============================================================================
 		// 構造体
@@ -25,23 +25,27 @@ namespace KoganeUnityLib
 		}
 
 		//==============================================================================
-		// 変数(readonly)
+		// 変数（static readonly）
 		//==============================================================================
 		private static readonly List<Data> m_list = new List<Data>();
 
 		//==============================================================================
-		// プロパティ
+		// プロパティ（static）
 		//==============================================================================
 		public static bool IsPressedVirtual { get; set; }
 
 		//==============================================================================
-		// イベント
+		// デリゲート（static）
 		//==============================================================================
-		public static event Action     mOnClick;
-		public static event Func<bool> mCanClick;
+		public static Func<bool> CanClick { private get; set; }
 
 		//==============================================================================
-		// 関数
+		// イベント（static）
+		//==============================================================================
+		public static event Action OnClick;
+
+		//==============================================================================
+		// 関数（static）
 		//==============================================================================
 		/// <summary>
 		/// 初期化します
@@ -95,7 +99,7 @@ namespace KoganeUnityLib
 			IsPressedVirtual = false;
 
 			if ( m_list.Count <= 0 ) return;
-			if ( mCanClick != null && !mCanClick() ) return;
+			if ( CanClick != null && !CanClick() ) return;
 
 			var count     = m_list.Count;
 			var lastIndex = count - 1;
@@ -109,7 +113,7 @@ namespace KoganeUnityLib
 
 			if ( !result ) return;
 
-			mOnClick?.Invoke();
+			OnClick?.Invoke();
 
 			for ( int i = 0; i < m_list.Count; i++ )
 			{
