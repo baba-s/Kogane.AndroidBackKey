@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace UniAndroidBackKey
+namespace Kogane
 {
 	/// <summary>
 	/// Android の戻るキーを管理するクラス
