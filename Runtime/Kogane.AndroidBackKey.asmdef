@@ -1,7 +1,9 @@
 {
-    "name": "UniAndroidBackKey",
+    "name": "Kogane.AndroidBackKey",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:da50e2cc2c6bf4b1d8eca5e0266bb19d"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

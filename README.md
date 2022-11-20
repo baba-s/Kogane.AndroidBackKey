@@ -1,4 +1,4 @@
-# Uni Anroid Back Key
+# Kogane Anroid Back Key
 
 Android でバックキーが押された時の処理を管理するクラス
 
