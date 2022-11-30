@@ -83,6 +83,14 @@ namespace Kogane
         /// <summary>
         /// イベントを追加します
         /// </summary>
+        public static void Add( Object key, IAndroidBackKeyClickable clickable )
+        {
+            Add( key, () => clickable.Click() );
+        }
+
+        /// <summary>
+        /// イベントを追加します
+        /// </summary>
         public static void Add( Object key, Action callback )
         {
             Add
