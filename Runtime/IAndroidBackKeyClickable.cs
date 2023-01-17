@@ -11,6 +11,6 @@
         /// <summary>
         /// 戻るキーが押された時に呼び出されます
         /// </summary>
-        void Click();
+        bool Click();
     }
 }
