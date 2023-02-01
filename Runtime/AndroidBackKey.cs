@@ -33,7 +33,7 @@ namespace Kogane
         //==============================================================================
         // 変数（static readonly）
         //==============================================================================
-        private static readonly List<Data> m_list = new();
+        private static List<Data> m_list = new();
 
         //==============================================================================
         // プロパティ（static）
@@ -57,19 +57,22 @@ namespace Kogane
         //==============================================================================
         // 関数（static）
         //==============================================================================
+#if UNITY_EDITOR
         /// <summary>
         /// ゲーム起動時に呼び出されます
         /// </summary>
-        [RuntimeInitializeOnLoadMethod( RuntimeInitializeLoadType.BeforeSceneLoad )]
+        [UnityEditor.InitializeOnEnterPlayMode]
         private static void RuntimeInitializeOnLoadMethod()
         {
             m_list?.Clear();
+            m_list = new();
 
-            IsPressedVirtual = false;
-            DisableCount     = 0;
-            CanClick         = null;
-            OnClick          = null;
+            IsPressedVirtual = default;
+            DisableCount     = default;
+            CanClick         = default;
+            OnClick          = default;
         }
+#endif
 
         /// <summary>
         /// 初期化します
