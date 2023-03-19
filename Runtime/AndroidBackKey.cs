@@ -30,10 +30,15 @@ namespace Kogane
             }
         }
 
+        //================================================================================
+        // 定数
+        //================================================================================
+        private const int INITIAL_CAPACITY = 8;
+
         //==============================================================================
         // 変数（static readonly）
         //==============================================================================
-        private static List<Data> m_list = new();
+        private static List<Data> m_list = new( INITIAL_CAPACITY );
 
         //==============================================================================
         // プロパティ（static）
@@ -65,7 +70,7 @@ namespace Kogane
         private static void RuntimeInitializeOnLoadMethod()
         {
             m_list?.Clear();
-            m_list = new();
+            m_list = new( INITIAL_CAPACITY );
 
             IsPressedVirtual = default;
             DisableCount     = default;
