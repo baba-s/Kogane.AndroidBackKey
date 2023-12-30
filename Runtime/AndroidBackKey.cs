@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -11,9 +12,9 @@ namespace Kogane
     /// </summary>
     public static class AndroidBackKey
     {
-        //==============================================================================
+        //================================================================================
         // 構造体
-        //==============================================================================
+        //================================================================================
         private readonly struct Data
         {
             public Object     Key      { get; }
@@ -35,33 +36,33 @@ namespace Kogane
         //================================================================================
         private const int INITIAL_CAPACITY = 8;
 
-        //==============================================================================
+        //================================================================================
         // 変数（static readonly）
-        //==============================================================================
+        //================================================================================
         private static List<Data> m_list = new( INITIAL_CAPACITY );
 
-        //==============================================================================
+        //================================================================================
         // プロパティ（static）
-        //==============================================================================
+        //================================================================================
         public static bool     IsPressedVirtual { get; set; }
         public static int      DisableCount     { get; private set; }
         public static bool     IsDisable        => 0 < DisableCount;
         public static int      Count            => m_list.Count;
         public static Object[] Keys             => m_list.Select( x => x.Key ).ToArray();
 
-        //==============================================================================
+        //================================================================================
         // デリゲート（static）
-        //==============================================================================
+        //================================================================================
         public static Func<bool> CanClick { private get; set; }
 
-        //==============================================================================
+        //================================================================================
         // イベント（static）
-        //==============================================================================
+        //================================================================================
         public static event Action OnClick;
 
-        //==============================================================================
+        //================================================================================
         // 関数（static）
-        //==============================================================================
+        //================================================================================
 #if UNITY_EDITOR
         /// <summary>
         /// ゲーム起動時に呼び出されます
@@ -91,9 +92,11 @@ namespace Kogane
         /// <summary>
         /// イベントを追加します
         /// </summary>
-        public static void Add( Object key, IAndroidBackKeyClickable clickable )
+        [MustUseReturnValue]
+        public static IDisposable Add( Object key, IAndroidBackKeyClickable clickable )
         {
             Add( key, () => clickable.Click() );
+            return Disposable.Create( () => Remove( key ) );
         }
 
         /// <summary>
@@ -150,7 +153,7 @@ namespace Kogane
                 m_list.Remove( x );
             }
 
-            if ( !Input.GetKeyDown( KeyCode.Escape ) && !IsPressedVirtual ) return;
+            if ( !Input.GetKeyDown( KeyCode.Escape ) && !Input.GetMouseButtonDown( 3 ) && !IsPressedVirtual ) return;
 
             IsPressedVirtual = false;
 
